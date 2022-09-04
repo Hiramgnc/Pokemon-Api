@@ -1,7 +1,8 @@
 const { Router } = require('express');
-const axios = require('axios');
+const axios = require('axios')
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
+const { Pokemon, Type } = require('../db');
 
 
 const router = Router();
@@ -9,6 +10,7 @@ const router = Router();
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
+//https://pokeapi.co/api/v2/pokemon/1
 const getApiInfo = async () =>{
 
     try{
@@ -31,9 +33,6 @@ const getApiInfo = async () =>{
                                 speed: e.stats[5].base_stat,
                                 height: e.height,
                                 weight: e.weight,
-                                types: e.types.length < 2 
-                                    ? [e.types[0].type.name]
-                                    : [e.types[0].type.name, e.types[1].type.name]
                                 })
                         })
                         return arrPokemons
@@ -44,5 +43,42 @@ const getApiInfo = async () =>{
         console.log(err)
     }
 }    
+
+
+const getDbInfo = async () => {
+    return await Pokemon.findAll({
+        include: {
+            model: Type,
+            attributes: ["name"],
+            through: {
+                attributes: []
+            }
+        }
+    })
+}
+
+const getAllPokemons = async () => {
+    const apiInfo = await getApiInfo();
+    const dbInfo = await getDbInfo();
+    const infoTotal = apiInfo.concat(dbInfo);
+
+    return infoTotal
+}
+
+router.get('/', async (req, res) => {
+    const name = req.query.name;
+    let pokemonTotal = await getAllPokemons();
+
+    if(name) {
+        let pokemonName = await getAllPokemons.filter(e => e.name.toLowerCase().include(name.toLowerCase()));
+
+        pokemonName.length ?
+        res.status(200).send(pokemonName) :
+        res.status(404).send("No se encontro ningun Pokemon con ese nombre");
+    } else {
+        res.status(200).send(pokemonTotal);
+    }
+})
+
 
 module.exports = router;
