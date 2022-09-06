@@ -14,7 +14,7 @@ const router = Router();
 
 const getApiInfo = async () => {
 
-    const apiUrl = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=40");
+    const apiUrl = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=10");
     const apiInfo = await apiUrl.data.results;
     let allPokemons = [];
 
@@ -25,7 +25,7 @@ const getApiInfo = async () => {
             allPokemons.push({
                 id: e.data.id,
                 name: e.data.name,
-                img: e.data.sprites.other.home.front_default,
+                image: e.data.sprites.other.dream_world.front_default,
                 hp: e.data.stats[0].base_stat,
                 attack: e.data.stats[1].base_stat,
                 defense: e.data.stats[2].base_stat,
@@ -76,6 +76,55 @@ router.get('/', async (req, res) => {
     } else {
         res.status(200).send(pokemonTotal);
     }
+})
+
+router.get('/:id', async (req, res) => {
+    const id = req.params.id;
+    const pokemonTotal= await getAllPokemons();
+
+    if (id) {
+        let pokemonId = pokemonTotal.filter(e => e.id == id)
+        pokemonId.length ?
+        res.status(200).json(pokemonId) :
+        res.status(408).json({msg: "No se encontro ese pokemon"})
+    }
+})
+
+router.post('/', async (req, res) => {
+    
+    let {
+            name,
+            image,
+            hp,
+            attack,
+            defense,
+            speed,
+            height,
+            weight,
+            types,
+            createInDb
+        } = req.body;
+    
+    let pokemonCreate = await Pokemon.create({ 
+        name,
+        image,
+        hp,
+        attack,
+        defense,
+        speed,
+        height,
+        weight,
+        createInDb
+    })
+
+    let pokemonDb = await Type.findAll({
+        where : { name : types }
+    });
+
+    pokemonCreate.addTypes(pokemonDb);
+
+    res.send('Pokemon creado con exito');
+
 })
 
 
