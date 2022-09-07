@@ -14,7 +14,7 @@ const router = Router();
 
 const getApiInfo = async () => {
 
-    const apiUrl = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=10");
+    const apiUrl = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=30");
     const apiInfo = await apiUrl.data.results;
     let allPokemons = [];
 
