@@ -5,6 +5,8 @@ import { getPokemons } from '../actions';
 import { Link } from 'react-router-dom';
 import Card from './Card';
 
+import styles from './Home.module.css';
+
 export default function Home() {
     const dispatch = useDispatch();
     const allPokemons = useSelector((state) => state.pokemons);
@@ -20,11 +22,12 @@ export default function Home() {
 
 
     return (
-        <div>
-            <Link to='/pokemon'>Crear Pokemon</Link>
-            <h1>Pokemon Api</h1>
+        <div className={styles.background}>
+            
+            <Link to='/pokemon'>Crear Pokémon</Link>
+            <h1>Pokémon Api</h1>
 
-            <button onClick={e => {handleClick(e)}}>Cargar todos los Pokemon</button>
+            <button onClick={e => {handleClick(e)}}>Cargar todos los Pokémon</button>
             
             <div>
                 {/* Ordenar tanto ascendentemente como descendentemente los pokemons por orden alfabético */}
@@ -72,17 +75,20 @@ export default function Home() {
                     <option value="created">Creados</option>
                 </select>
 
-                {
-                    allPokemons?.map((e) => {
-                        return(
-                            <Card 
-                                image={e.image}
-                                name={e.name}
-                                type={e.type}
-                            />
-                        )
-                    })
-                }
+                <div className={styles.card}>
+                    {
+                        allPokemons?.map((p) => {
+                            return(
+                                <Card 
+                                    image={p.image}
+                                    name={p.name}
+                                    type={p.type}
+                                    key={p.id}
+                                />
+                            )
+                        })
+                    }
+                </div>
 
             </div>
 

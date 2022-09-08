@@ -1,0 +1,7 @@
+.background {
+    background: url(https://i.imgur.com/C90jsi5.png);
+    background-size: cover;
+    background-attachment: fixed;
+    width: 100%;
+    position: absolute;
+}
