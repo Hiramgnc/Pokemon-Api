@@ -19,7 +19,6 @@ export default function Card ({ image, name, type }) {
                     </div>
                 </div>
 
-                {/* <a href className={styles.link}>Ver detalle</a> */}
                 <Link className={styles.link} to='/pokemon'>Ver detalle</Link>
             </div>
         </div>

@@ -20,7 +20,7 @@ module.exports = (sequelize) => {
     image: {
       type: DataTypes.STRING,
       allowNull: true,
-      defaultValue: "https://i.postimg.cc/ydrGgdVx/default.webp"
+      defaultValue: "https://i.postimg.cc/ydrGgdVx/default.webp",
     },
 
     //Vida

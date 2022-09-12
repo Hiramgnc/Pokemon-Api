@@ -12,35 +12,68 @@ const router = Router();
 
 //https://pokeapi.co/api/v2/pokemon/1
 
-const getApiInfo = async () => {
 
-    const apiUrl = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=30");
-    const apiInfo = await apiUrl.data.results;
-    let allPokemons = [];
+//Response (41.201s) - http://localhost:3001/pokemon
+// const getApiInfo = async () => {
+// //buscar promiseAll
+//     const apiUrl = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=40");
+//     const apiInfo = await apiUrl.data.results;
+//     let allPokemons = [];
 
-    for (let i = 0; i < apiInfo.length; i++) {
+//     for (let i = 0; i < apiInfo.length; i++) {
 
-        await axios.get(apiInfo[i].url).then((e) =>
+//         await axios.get(apiInfo[i].url).then((e) =>
 
-            allPokemons.push({
-                id: e.data.id,
-                name: e.data.name,
-                image: e.data.sprites.other.dream_world.front_default,
-                hp: e.data.stats[0].base_stat,
-                attack: e.data.stats[1].base_stat,
-                defense: e.data.stats[2].base_stat,
-                speed: e.data.stats[5].base_stat,
-                height: e.data.height,
-                weight: e.data.weight,
-                types: e.data.types.map((e) => e.type),
+//             allPokemons.push({
+//                 id: e.data.id,
+//                 name: e.data.name,
+//                 image: e.data.sprites.other.dream_world.front_default,
+//                 hp: e.data.stats[0].base_stat,
+//                 attack: e.data.stats[1].base_stat,
+//                 types: e.data.types.map((e) => e.type),
 
+//             })
+//         );
+//     }
+    
+//     return allPokemons;
+// };
+
+//Response (15.638s) - http://localhost:3001/pokemon
+const getApiInfo = async () =>{
+    try {
+        
+        //Primera consulta a la API
+        const apiUrl = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=40') 
+        //apiInfo es un array con los resultados de la segunda consulta
+        const apiInfo = apiUrl.data.results.map(e=>  axios.get(e.url))
+            
+        let pokemons = Promise.all(apiInfo) //Me guardo la promesa para retornarla
+        //Este e es un array con los objetos data de la respuesta axios 
+            .then(e => {
+                let pokemon = e.map(e => e.data) //Crea un array con los objetos pokemon
+                let allPokemons = []
+                pokemon.map(e => {
+                    allPokemons.push({
+                        id: e.id,
+                        name: e.name,
+                        image: e.sprites.other.dream_world.front_default,
+                        hp: e.stats[0].base_stat,
+                        attack: e.stats[1].base_stat,
+                        types: e.types.map((e) => e.type),
+                    })
+                })
+    
+                return allPokemons
             })
-        );
+    
+        return pokemons
+
+    } catch (error) {
+        res.send(error)
     }
     
-    return allPokemons;
-};
-
+}    
 
 const getDbInfo = async () => {
     return await Pokemon.findAll({
@@ -91,8 +124,21 @@ router.get('/:id', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    
-    let {
+    try {
+        let {
+                name,
+                image,
+                hp,
+                attack,
+                defense,
+                speed,
+                height,
+                weight,
+                types,
+                createInDb
+            } = req.body;
+        
+        let pokemonCreate = await Pokemon.create({ 
             name,
             image,
             hp,
@@ -101,29 +147,20 @@ router.post('/', async (req, res) => {
             speed,
             height,
             weight,
-            types,
             createInDb
-        } = req.body;
+        })    
     
-    let pokemonCreate = await Pokemon.create({ 
-        name,
-        image,
-        hp,
-        attack,
-        defense,
-        speed,
-        height,
-        weight,
-        createInDb
-    })
 
-    let pokemonDb = await Type.findAll({
-        where : { name : types }
-    });
+        let pokemonDb = await Type.findAll({
+            where : { name : types }
+        });
 
-    pokemonCreate.addTypes(pokemonDb);
+        pokemonCreate.addTypes(pokemonDb);
 
-    res.send('Pokemon creado con exito');
+        res.send('Pokemon creado con exito');
+    } catch (error) {
+        res.send(error)
+    }
 
 })
 

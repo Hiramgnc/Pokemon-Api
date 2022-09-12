@@ -5,3 +5,31 @@
     width: 100%;
     position: absolute;
 }
+
+.cards {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    text-transform: capitalize;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 80%;
+    margin: auto;
+}
+
+.btnCrear  {
+    margin-top: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    padding: 10px;
+    color: red;
+    border: 1px solid red;
+    border-radius: 4px;
+    transition: all 400ms ease;
+    margin-bottom: 15px;
+}
+
+.btnCrear:hover {
+    background: red;
+    color: white;
+}

@@ -1,15 +1,26 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPokemons } from '../actions';
 import { Link } from 'react-router-dom';
 import Card from './Card';
+import Paginate from './Paginate';
 
 import styles from './Home.module.css';
 
 export default function Home() {
     const dispatch = useDispatch();
     const allPokemons = useSelector((state) => state.pokemons);
+
+    //Paginado
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pokemonsPerPage, setRecipesPerPage] = useState(12);
+    const indexOfLasPokemon = currentPage * pokemonsPerPage;
+    const indexOfFirsPokemon = indexOfLasPokemon - pokemonsPerPage;
+    const currentPokemon = allPokemons.slice(indexOfFirsPokemon, indexOfLasPokemon);
+
+    const paginate = pageNumber => setCurrentPage(pageNumber);
 
     useEffect (() => {
         dispatch(getPokemons())
@@ -24,7 +35,7 @@ export default function Home() {
     return (
         <div className={styles.background}>
             
-            <Link to='/pokemon'>Crear Pokémon</Link>
+            <Link className={styles.btnCrear} to='/pokemon'>Crear Pokémon</Link>
             <h1>Pokémon Api</h1>
 
             <button onClick={e => {handleClick(e)}}>Cargar todos los Pokémon</button>
@@ -75,9 +86,16 @@ export default function Home() {
                     <option value="created">Creados</option>
                 </select>
 
-                <div className={styles.card}>
+                {/* Paginado */}
+                <Paginate
+                    pokemonsPerPage={pokemonsPerPage}
+                    allPokemons={allPokemons.length}
+                    paginate={paginate}
+                />
+
+                <div className={styles.cards}>
                     {
-                        allPokemons?.map((p) => {
+                        currentPokemon?.map((p) => {
                             return(
                                 <Card 
                                     image={p.image}

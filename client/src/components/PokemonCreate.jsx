@@ -1,9 +1,8 @@
-import React from 'react'
+import React from 'react';
 
-const PokemonCreate = () => {
+export default function PokemonCreate() {
+
     return (
         <div>PokemonCreate</div>
     )
 }
-
-export default PokemonCreate
