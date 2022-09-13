@@ -16,6 +16,16 @@
     margin: auto;
 }
 
+.loading {
+    color: yellow;
+    font-size: 40px;
+}
+
+.gif {
+    width: 1200px;
+    height: 500px;
+}
+
 .btnCrear  {
     margin-top: 10px;
     text-decoration: none;

@@ -13,12 +13,13 @@ export default function Paginate({ pokemonsPerPage, allPokemons, paginate}) {
             <ul className={styles.ul}>
 
                 {pageNumbers.map(number => (
-                    <li className={styles.li} key={number}>
-                        <button className={styles.button} onClick={() => paginate(number)}>
-                            {number}
-                        </button>
-                    </li>
-                ))}
+                        <li className={styles.li} key={number}>
+                            <button className={styles.button} onClick={() => paginate(number)}>
+                                {number}
+                            </button>
+                        </li>
+                    ))
+                }
 
             </ul>
         </nav>

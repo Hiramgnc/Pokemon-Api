@@ -2,7 +2,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPokemons } from '../actions';
+import { getPokemons, orderByName, orderByAttack } from '../actions';
 import { Link } from 'react-router-dom';
 import Card from './Card';
 import Paginate from './Paginate';
@@ -13,9 +13,12 @@ export default function Home() {
     const dispatch = useDispatch();
     const allPokemons = useSelector((state) => state.pokemons);
 
+    //Ordenamiento
+    const[order, setOrder] = useState('');
+
     //Paginado
     const [currentPage, setCurrentPage] = useState(1);
-    const [pokemonsPerPage, setRecipesPerPage] = useState(12);
+    const [pokemonsPerPage ] = useState(12);
     const indexOfLasPokemon = currentPage * pokemonsPerPage;
     const indexOfFirsPokemon = indexOfLasPokemon - pokemonsPerPage;
     const currentPokemon = allPokemons.slice(indexOfFirsPokemon, indexOfLasPokemon);
@@ -31,6 +34,20 @@ export default function Home() {
         dispatch(getPokemons());
     }
 
+    function handleSortName(e) {
+        e.preventDefault();
+        dispatch(orderByName(e.target.value))
+        setCurrentPage(1);
+        setOrder(`Ordenado ${e.target.value}`);
+    }
+
+    function handleSortAttack(e) {
+        e.preventDefault();
+        dispatch(orderByAttack(e.target.value))
+        setCurrentPage(1);
+        setOrder(`Ordenado ${e.target.value}`);
+    }
+
 
     return (
         <div className={styles.background}>
@@ -38,18 +55,18 @@ export default function Home() {
             <Link className={styles.btnCrear} to='/pokemon'>Crear Pokémon</Link>
             <h1>Pokémon Api</h1>
 
-            <button onClick={e => {handleClick(e)}}>Cargar todos los Pokémon</button>
+            <button onClick = {e => {handleClick(e)}}>Cargar todos los Pokémon</button>
             
             <div>
                 {/* Ordenar tanto ascendentemente como descendentemente los pokemons por orden alfabético */}
-                <select>
+                <select onChange={e => handleSortName(e)}>
                     <option value="vacio">Alfabéticamente</option>
                     <option value="asc">Ascendente</option>
                     <option value="desc">Descendente</option>
                 </select>
 
                 {/* Ordenar por ataque */}
-                <select>
+                <select onChange={e => handleSortAttack(e)}>
                     <option value="vacio">Por ataque</option>
                     <option value="high">Más alto</option>
                     <option value="low">Más bajo</option>
@@ -95,17 +112,26 @@ export default function Home() {
 
                 <div className={styles.cards}>
                     {
-                        currentPokemon?.map((p) => {
+                        currentPokemon.length > 0 ? currentPokemon?.map((p) => {
                             return(
                                 <Card 
                                     image={p.image}
                                     name={p.name}
-                                    type={p.type}
+                                    // type={p.type}
+                                    type={p.types.map(e => e.name + (' , '))}
                                     key={p.id}
                                 />
                             )
-                        })
-                    }
+                        }) :
+
+                    <div>
+                        <p className={styles.loading}>Cargando Pokemons...</p>
+                        <img className={styles.gif} 
+                            src="https://i.postimg.cc/63yNNxfm/pokeball.gif" 
+                            alt="loading"/>
+                    </div>
+                    } 
+                    
                 </div>
 
             </div>
