@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPokemons, orderByName, orderByAttack } from '../actions';
+import { getPokemons, orderByName, orderByAttack, filterCreated, filterByType } from '../actions';
 import { Link } from 'react-router-dom';
 import Card from './Card';
 import Paginate from './Paginate';
@@ -10,8 +10,8 @@ import Paginate from './Paginate';
 import styles from './Home.module.css';
 
 export default function Home() {
-    const dispatch = useDispatch();
     const allPokemons = useSelector((state) => state.pokemons);
+    const dispatch = useDispatch();
 
     //Ordenamiento
     const[order, setOrder] = useState('');
@@ -25,15 +25,13 @@ export default function Home() {
 
     const paginate = pageNumber => setCurrentPage(pageNumber);
 
-    useEffect (() => {
-        dispatch(getPokemons())
-    },[dispatch]);
 
     function handleClick(e) {
         e.preventDefault();
         dispatch(getPokemons());
     }
 
+    //Ordenamiento
     function handleSortName(e) {
         e.preventDefault();
         dispatch(orderByName(e.target.value))
@@ -48,6 +46,15 @@ export default function Home() {
         setOrder(`Ordenado ${e.target.value}`);
     }
 
+    //filtrado
+    function handleFilterCreated(e) {
+        dispatch(filterCreated(e.target.value))
+    }
+
+    function handleFilterTypes(e) {
+        dispatch(filterByType(e.target.value))
+    }
+
 
     return (
         <div className={styles.background}>
@@ -59,21 +66,21 @@ export default function Home() {
             
             <div>
                 {/* Ordenar tanto ascendentemente como descendentemente los pokemons por orden alfabético */}
-                <select onChange={e => handleSortName(e)}>
+                <select className={styles.select} onChange={e => handleSortName(e)}>
                     <option value="vacio">Alfabéticamente</option>
                     <option value="asc">Ascendente</option>
                     <option value="desc">Descendente</option>
                 </select>
 
                 {/* Ordenar por ataque */}
-                <select onChange={e => handleSortAttack(e)}>
-                    <option value="vacio">Por ataque</option>
-                    <option value="high">Más alto</option>
-                    <option value="low">Más bajo</option>
+                <select className={styles.select} onChange={e => handleSortAttack(e)}>
+                    <option className={styles.option} value="vacio">Por ataque</option>
+                    <option className={styles.option} value="high">Más alto</option>
+                    <option className={styles.option} value="low">Más bajo</option>
                 </select>
 
                 {/* Filtrar por tipo de pokemon */}
-                <select>
+                <select className={styles.select} onChange={e => handleFilterTypes(e)}>
                     <option value="all">Todos los Tipos</option>
                     <option value="poison">Poison</option>
                     <option value="rock">Rock</option>
@@ -92,12 +99,11 @@ export default function Home() {
                     <option value="steel">Steel</option>
                     <option value="water">Water</option>
                     <option value="dragon">Dragon</option>
-
                 </select>
     
 
                 {/* Filtrar por pokemon existente o creado por nosotros */}
-                <select>
+                <select className={styles.select} onChange={e => handleFilterCreated(e)}>
                     <option value="all">Todos los Pokemons</option>
                     <option value="api">Existentes</option>
                     <option value="created">Creados</option>
@@ -112,7 +118,8 @@ export default function Home() {
 
                 <div className={styles.cards}>
                     {
-                        currentPokemon.length > 0 ? currentPokemon?.map((p) => {
+                        currentPokemon.length > 0 ? 
+                        currentPokemon?.map((p) => {
                             return(
                                 <Card 
                                     image={p.image}

@@ -25,3 +25,21 @@ export function orderByAttack(payload) {
         payload
     }
 }
+
+//Filtrar por pokemon existente o creado por nosotros
+export function filterCreated(payload) {
+    return {
+        type: 'FILTER_CREATED',
+        payload
+    }
+}
+
+
+//Filtrar por tipo de pokemon
+export function filterByType(payload) {
+    console.log(payload)
+    return {
+        type: 'FILTER_BY_TYPE',
+        payload
+    }
+}

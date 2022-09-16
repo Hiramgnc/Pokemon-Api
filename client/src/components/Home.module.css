@@ -43,3 +43,37 @@
     background: red;
     color: white;
 }
+
+.select {
+    padding: 5px 20px;
+    margin: 5px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    background-color: dimgray;
+    color: white;
+    border: 3px solid red;
+    border-radius: 5px;
+    background-repeat: no-repeat;
+    background-size: 22px;
+    background-position: 135px;
+    outline: none;
+    box-shadow: 0 0 20px rgba(20, 20, 20, 0.25);
+
+}
+
+.select:-ms-expand {
+    display: none;
+}
+
+.select:hover {
+    border: 3px solid chartreuse;
+}
+
+option {
+    letter-spacing: 1.2px;
+    font-weight: 200px;
+    font-size: 15px;
+}
