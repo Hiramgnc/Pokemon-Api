@@ -13,6 +13,13 @@ function rootReducer (state = initialState, action) {
                 allPokemons: action.payload
             };
 
+        //SearchBar
+        case 'GET_NAME_POKEMONS':
+            return {
+                ...state,
+                pokemons: action.payload
+            };
+
         case 'ORDER_BY_NAME':
             let sortedArr = action.payload === 'asc' ?
             state.pokemons.sort(function (a, b) {

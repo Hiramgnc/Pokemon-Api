@@ -10,6 +10,21 @@ export function getPokemons() {
     }
 }
 
+//SearchBar
+export function getNamePokemons(name) {
+    return async function(dispatch){
+        try {
+            let json = await axios.get("http://localhost:3001/pokemon?name=" + name);
+            return dispatch ({
+                type: 'GET_NAME_POKEMONS',
+                payload: json.data
+            })
+        } catch (error) {
+            alert('No se encontraron resultados');
+        }
+    }
+}
+
 //Ordenar tanto ascendentemente como descendentemente los pokemons por orden alfabético
 export function orderByName(payload) {
     return {

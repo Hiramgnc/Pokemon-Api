@@ -6,6 +6,7 @@ import { getPokemons, orderByName, orderByAttack, filterCreated, filterByType } 
 import { Link } from 'react-router-dom';
 import Card from './Card';
 import Paginate from './Paginate';
+import SearchBar from './SearchBar';
 
 import styles from './Home.module.css';
 
@@ -115,6 +116,8 @@ export default function Home() {
                     allPokemons={allPokemons.length}
                     paginate={paginate}
                 />
+
+                <SearchBar />
 
                 <div className={styles.cards}>
                     {
