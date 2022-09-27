@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styles from './Card.module.css';
 
 //Área donde se verá el listado de pokemons deberá mostrar su Imagen Nombre Tipos
-export default function Card ({ image, name, type }) {
+export default function Card ({ id, image, name, type }) {
     return (
         <div className={styles.container}>
 
@@ -22,7 +22,9 @@ export default function Card ({ image, name, type }) {
                     
                 </div>
 
-                <Link className={styles.link} to='/pokemon'>Ver detalle</Link>
+                <Link to={`/home/${id}`} className={styles.link}>Ver detalle</Link>
+    
+                
             </div>
 
         </div>

@@ -47,6 +47,7 @@ const getApiInfo = async () =>{
         const apiUrl = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=40') 
         //apiInfo es un array con los resultados de la segunda consulta
         const apiInfo = apiUrl.data.results.map(e=>  axios.get(e.url))
+        
             
         let pokemons = Promise.all(apiInfo) //Me guardo la promesa para retornarla
         //Este e es un array con los objetos data de la respuesta axios 
@@ -54,6 +55,7 @@ const getApiInfo = async () =>{
                 let pokemon = e.map(e => e.data) //Crea un array con los objetos pokemon
                 let allPokemons = []
                 pokemon.map(e => {
+                    // console.log(e.types)
                     allPokemons.push({
                         id: e.id,
                         name: e.name,
@@ -61,9 +63,9 @@ const getApiInfo = async () =>{
                         hp: e.stats[0].base_stat,
                         attack: e.stats[1].base_stat,
                         types: e.types.map((e) => e.type),
+                        
                     })
                 })
-    
                 return allPokemons
             })
     
@@ -124,19 +126,27 @@ router.get('/:id', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
+    let {
+            name,
+            image,
+            hp,
+            attack,
+            defense,
+            speed,
+            height,
+            weight,
+            types,
+            createInDb
+        } = req.body;
+
     try {
-        let {
-                name,
-                image,
-                hp,
-                attack,
-                defense,
-                speed,
-                height,
-                weight,
-                types,
-                createInDb
-            } = req.body;
+        let pokeExists = await Pokemon.findOne({
+            where:{
+                name
+            }
+        });
+        
+        if(pokeExists) return res.send('Ese nombre de pokemon ya existe');
         
         let pokemonCreate = await Pokemon.create({ 
             name,
@@ -152,14 +162,25 @@ router.post('/', async (req, res) => {
     
 
         let pokemonDb = await Type.findAll({
-            where : { name : types }
+            where : { 
+                name : types[0].name }
         });
+        console.log(pokemonDb)
+        pokemonCreate.addType(pokemonDb[0], {through: "pokemon_type"});
+        //Bucle for of, for each
+        console.log(pokemonCreate)
+        if (types[1]) {
+            let pokemonDb2 = await Type.findAll({ 
+                where: {name: types[1].name} 
+            })
 
-        pokemonCreate.addTypes(pokemonDb);
+            pokemonCreate.addType(pokemonDb2);
+        }
 
-        res.send('Pokemon creado con exito');
+        res.send(`Pokemon ${name} creado con exito`);
+        
     } catch (error) {
-        res.send(error)
+        res.status(404).send('No se pudo crear el pokemon')
     }
 
 })

@@ -123,6 +123,7 @@ export default function Home() {
                     {
                         currentPokemon.length > 0 ? 
                         currentPokemon?.map((p) => {
+                            // console.log(p)
                             return(
                                 <Card 
                                     image={p.image}

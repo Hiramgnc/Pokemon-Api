@@ -1,0 +1,29 @@
+.background {
+    background: url(https://i.postimg.cc/1zRQJqnP/pokemon-1601388-960-720.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    align-items: center;
+}
+
+.title {
+    color: white;
+    font-size: 40px;
+    margin-top: 5px;
+    text-decoration-line: underline;
+    text-transform: uppercase;
+}
+
+.label {
+    text-align: center;
+    padding: 5px 10px;
+    font-size: 20px;
+    color: chartreuse;
+}
+
+.error {
+    color: yellow;
+    font-size: 15px;
+}

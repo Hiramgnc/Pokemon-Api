@@ -1,6 +1,8 @@
 const initialState = {
     pokemons: [],
-    allPokemons: []
+    allPokemons: [],
+    types: [],
+    detail: []
 }
 
 function rootReducer (state = initialState, action) {
@@ -12,6 +14,26 @@ function rootReducer (state = initialState, action) {
                 pokemons: action.payload,
                 allPokemons: action.payload
             };
+
+
+        //Formulario
+        case 'GET_TYPES':
+            return {
+                ...state,
+                types: action.payload
+            }
+
+        case 'POST_POKEMON':
+            return {
+                ...state,
+            }
+
+        //Detalle
+        case 'GET_DETAILS':
+            return {
+                ...state,
+                detail: action.payload
+            }
 
         //SearchBar
         case 'GET_NAME_POKEMONS':
@@ -87,18 +109,31 @@ function rootReducer (state = initialState, action) {
 
 
         //Filtrar por tipo de pokemon
+        //Vaciar db con poke sin type
+
         case 'FILTER_BY_TYPE':
+            //revisar el if
             const allPokemons = state.allPokemons;
             const typeFiltered = action.payload === "all" ? allPokemons 
-            : allPokemons.filter((e) => e.types === action.payload)
+            : allPokemons.filter(t => t.types.find(t => {
+                if(t.name === action.payload) {
+                    return t
+                    }
+                })) 
+
+                if(!typeFiltered.length > 0) {
+                    alert('No existen pokemons de ' + action.payload)
+                }
+
+                
+            console.log(action.payload)
             console.log(allPokemons)
             console.log(typeFiltered)
             return {
                 ...state,
-                pokemons: typeFiltered
+                pokemons: [...typeFiltered]
             };
 
-        
         default: 
         return state;
     }
