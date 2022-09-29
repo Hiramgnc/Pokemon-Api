@@ -21,21 +21,35 @@ export default function Detail(props) {
     const myPokemon = useSelector((state) => state.detail)
 
 
-
     return (
         <div>
+
             {
                 myPokemon.length > 0 ?
                 <div>
-                    <h1>{myPokemon?.name}</h1>
+                    <h1>{myPokemon[0].name}</h1>
+                    <img
+                    src={
+                        myPokemon[0].image ? myPokemon[0].image : myPokemon[0].img
+                    }
+                    alt="pokemon"
+                    />
+                    <h2>ID: {myPokemon[0].id}</h2>
+                    <h2>Vida: {myPokemon[0].hp}</h2>
+                    <h2>Attaque: {myPokemon[0].attack}</h2>
+                    <h2>Defensa: {myPokemon[0].defense}</h2>
+                    <h2>Velocidad: {myPokemon[0].speed}</h2>
+                    <h2>Altura: {myPokemon[0].height + " m"}</h2>
+                    <h2>Peso: {myPokemon[0].weight + " kg"}</h2>
+                    <h2>Tipo: {myPokemon[0].types?.map((e) => e.name + " ,")}</h2>
                 </div>
-                : <p>Loading ...</p>
+                : <div><img src="https://i.postimg.cc/3xT7063k/Pikachu-Loading.gif" alt="loading" /></div>
             }
 
             <Link to='/home'>
                 <button>Volver</button>
             </Link>
+
         </div> 
-        // : <div><img src="https://i.postimg.cc/3xT7063k/Pikachu-Loading.gif" alt="loading" /></div>
     )
 }

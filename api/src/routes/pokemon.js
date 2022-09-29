@@ -62,6 +62,8 @@ const getApiInfo = async () =>{
                         image: e.sprites.other.dream_world.front_default,
                         hp: e.stats[0].base_stat,
                         attack: e.stats[1].base_stat,
+                        height: e.height,
+                        weight: e.weight,
                         types: e.types.map((e) => e.type),
                         
                     })

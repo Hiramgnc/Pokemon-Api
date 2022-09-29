@@ -77,3 +77,10 @@ option {
     font-weight: 200px;
     font-size: 15px;
 }
+
+.link {    
+    margin: 10px;
+    float: left;
+    text-decoration: none;
+    opacity: none;  
+}
