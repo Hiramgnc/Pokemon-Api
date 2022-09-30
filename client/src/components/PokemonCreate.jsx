@@ -37,21 +37,21 @@ function validate(input) {
         }
     }
 
-    if (input.defense < 1 || input.defense > 100) {
+    if (input.defense < 1 || input.defense > 110) {
         if (input.defense < 1) {
             errors.defense = 'La defensa del Pokémon debe ser superior a 1'
         }
-        if (input.defense > 100) {
-            errors.defense = 'La defensa del Pokémon debe ser inferior a 100'
+        if (input.defense > 110) {
+            errors.defense = 'La defensa del Pokémon debe ser inferior a 110'
         }
     }
 
-    if (input.speed < 1 || input.speed > 100) {
+    if (input.speed < 1 || input.speed > 110) {
         if (input.speed < 1) {
             errors.speed = 'La velocidad del Pokémon debe ser superior a 1'
         }
-        if (input.speed > 100) {
-            errors.speed = 'La velocidad del Pokémon debe ser inferior a 100'
+        if (input.speed > 110) {
+            errors.speed = 'La velocidad del Pokémon debe ser inferior a 110'
         }
     }
 
@@ -64,19 +64,20 @@ function validate(input) {
         }
     }
 
-    if (input.weight < 1 || input.weight > 100) {
+    if (input.weight < 1 || input.weight > 1000) {
         if (input.weight < 1) {
             errors.weight = 'El peso del Pokémon debe ser superior a 1'
         }
-        if (input.weight > 100) {
-            errors.weight = 'El peso del Pokémon debe ser inferior a 100'
+        if (input.weight > 1000) {
+            errors.weight = 'El peso del Pokémon debe ser inferior a 1000'
         }
     }
 
 
     if (!input.types.length) {
         errors.types = 'Debe elegir al menos un tipo de Pokémon'
-    } else if (input.types.length > 2) {
+    } 
+    if (input.types.length > 2) {
         errors.types = `No puedes elegir más de 2 tipos por Pokémon`
     }   
 
@@ -119,10 +120,21 @@ export default function PokemonCreate() {
 
     function handleSelect(e) {
         //.include validar si lo tiene, desabilitar select disabled, recorrer array. .find
-        setInput({
-            ...input,
-            types: [...input.types, {name: e.target.value}]
+        const typeFounded = input.types.find((type) => {
+            return type.name === e.target.value
         })
+        console.log(typeFounded)
+
+        if (!typeFounded) {
+            setInput({
+                ...input,
+                types: [...input.types, {name: e.target.value}]
+            })
+        }
+        // setInput({
+        //     ...input,
+        //     types: [...input.types, {name: e.target.value}]
+        // })
         // console.log(input)
 
         if( input.name === ''  || 
@@ -182,7 +194,7 @@ export default function PokemonCreate() {
             <Link to='/home'><button className={styles.btnVol}>Volver</button></Link>
 
                 <h1 className={styles.title}>Crea tu Pokémon</h1>
-                <form onSubmit={(e) => handleSubmit (e)}>
+                <form className={styles.form} onSubmit={(e) => handleSubmit (e)}>
 
                     <div className={styles.label}>
                         <label>Nombre:</label>
@@ -302,6 +314,10 @@ export default function PokemonCreate() {
                     <ul>
                         <li>{ input.types.map(e => e.name + " ,")}</li>
                     </ul>
+                    { errors.types && (
+                            <p className={styles.error}>{errors.types}</p>
+                            )
+                    }
 
                     <button className={styles.btnCrear} type="submit" disabled={button}>Crear Pokémon</button>
 
@@ -310,7 +326,7 @@ export default function PokemonCreate() {
                 { input.types.map(e =>
                 <div className={styles.containerDelete}>
                     <p className={styles.typeDelete}>{e.name}</p>
-                    <button className={styles.buttonDelete} onClick={() => handleDelete(e.name)}>X</button>
+                    <button className={styles.buttonDelete} onClick={() => handleDelete(e)}>X</button>
                 </div>)}
         </div>
     )

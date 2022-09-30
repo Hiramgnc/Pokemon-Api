@@ -50,20 +50,31 @@ export default function Home() {
     //filtrado
     function handleFilterCreated(e) {
         dispatch(filterCreated(e.target.value))
+        setCurrentPage(1);
+        setOrder(`Ordenado ${e.target.value}`);
     }
 
     function handleFilterTypes(e) {
         dispatch(filterByType(e.target.value))
+        setCurrentPage(1);
+        setOrder(`Ordenado ${e.target.value}`);
     }
 
 
     return (
         <div className={styles.background}>
-            
-            <Link className={styles.btnCrear} to='/pokemon'>Crear Pokémon</Link>
-            <h1>Pokémon Api</h1>
 
-            <button onClick = {e => {handleClick(e)}}>Cargar todos los Pokémon</button>
+            <div className={styles.head}>
+                <Link className={styles.btnCrear} to='/pokemon'>Crear Pokémon</Link>
+                <SearchBar className={styles.search} />
+                <div className={styles.txtHome}>
+                    <h1>Pokémon Api</h1>
+                </div>
+                <div>
+                    <img className={styles.img} src="https://i.postimg.cc/NM4wPcP2/nav-removebg-preview.png" alt="" />
+                </div>
+                
+            </div>
             
             <div>
                 {/* Ordenar tanto ascendentemente como descendentemente los pokemons por orden alfabético */}
@@ -110,14 +121,17 @@ export default function Home() {
                     <option value="created">Creados</option>
                 </select>
 
+                <button className={styles.select} onClick = {e => {handleClick(e)}}>
+                    Recargar todos los Pokémon
+                </button>
+
                 {/* Paginado */}
                 <Paginate
                     pokemonsPerPage={pokemonsPerPage}
                     allPokemons={allPokemons.length}
                     paginate={paginate}
+                    currentPage={currentPage}
                 />
-
-                <SearchBar />
 
                 <div className={styles.cards}>
                     {
@@ -125,7 +139,6 @@ export default function Home() {
                         currentPokemon?.map((p, i) => {
                             // console.log(p)
                             return(
-                                // <Link className={styles.link} key={p.id} to={'/home/' + p.id } >
                                 <div key={i}>
                                 <Card
                                     image={p.image}
@@ -136,7 +149,6 @@ export default function Home() {
                                     key={p.id}
                                 />
                                 </div>
-                            // </Link>
                             )
                         }) :
 
@@ -149,6 +161,13 @@ export default function Home() {
                     } 
                     
                 </div>
+
+                <Paginate
+                    pokemonsPerPage={pokemonsPerPage}
+                    allPokemons={allPokemons.length}
+                    paginate={paginate}
+                    currentPage={currentPage}
+                />
 
             </div>
 

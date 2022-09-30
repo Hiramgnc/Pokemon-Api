@@ -35,6 +35,13 @@ function rootReducer (state = initialState, action) {
                 detail: action.payload
             }
 
+        //Resetear detalle
+        case 'RESET_DETAIL':
+            return {
+                ...state,
+                detail: []
+            }
+
         //SearchBar
         case 'GET_NAME_POKEMONS':
             return {
@@ -110,15 +117,12 @@ function rootReducer (state = initialState, action) {
 
         //Filtrar por tipo de pokemon
         //Vaciar db con poke sin type
-
         case 'FILTER_BY_TYPE':
             //revisar el if
             const allPokemons = state.allPokemons;
             const typeFiltered = action.payload === "all" ? allPokemons 
             : allPokemons.filter(t => t.types.find(t => {
-                if(t.name === action.payload) {
-                    return t
-                    }
+                return t.name === action.payload
                 })) 
 
                 if(!typeFiltered.length > 0) {

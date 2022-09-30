@@ -16,6 +16,31 @@
     margin: auto;
 }
 
+.img {
+    height: 90px;
+}
+
+.head {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-evenly;
+    background: dimgray;
+    margin-bottom: 10px;
+}
+
+.txtHome {
+    color: yellow;
+    font-size: 18px;
+    font-family: 'Bahnschrift SemiCondensed';
+}
+
+.search{
+    display: flex;
+    justify-content: center;
+    margin-left: 50%;
+}
+
 .loading {
     color: yellow;
     font-size: 40px;
@@ -32,16 +57,16 @@
     cursor: pointer;
     display: inline-block;
     padding: 10px;
-    color: red;
-    border: 1px solid red;
+    color: yellow;
+    border: 1px solid yellow;
     border-radius: 4px;
     transition: all 400ms ease;
     margin-bottom: 15px;
 }
 
 .btnCrear:hover {
-    background: red;
-    color: white;
+    background: yellow;
+    color: black;
 }
 
 .select {

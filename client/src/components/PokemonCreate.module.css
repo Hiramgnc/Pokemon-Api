@@ -1,6 +1,6 @@
 .background {
     background: url(https://i.postimg.cc/1zRQJqnP/pokemon-1601388-960-720.jpg);
-    position: absolute;
+    /* position: absolute; */
     object-fit: cover;
     background-size: cover;
     background-repeat: no-repeat;
@@ -15,6 +15,10 @@
     align-items: center;
     padding: 10px;
     margin: 0 auto;
+}
+
+.form {
+    top: 150px;
 }
 
 .title {
