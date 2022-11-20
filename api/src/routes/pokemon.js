@@ -4,42 +4,11 @@ const axios = require('axios')
 // Ejemplo: const authRouter = require('./auth.js');
 const { Pokemon, Type } = require('../db');
 
-
 const router = Router();
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
-//https://pokeapi.co/api/v2/pokemon/1
-
-
-//Response (41.201s) - http://localhost:3001/pokemon
-// const getApiInfo = async () => {
-// //buscar promiseAll
-//     const apiUrl = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=40");
-//     const apiInfo = await apiUrl.data.results;
-//     let allPokemons = [];
-
-//     for (let i = 0; i < apiInfo.length; i++) {
-
-//         await axios.get(apiInfo[i].url).then((e) =>
-
-//             allPokemons.push({
-//                 id: e.data.id,
-//                 name: e.data.name,
-//                 image: e.data.sprites.other.dream_world.front_default,
-//                 hp: e.data.stats[0].base_stat,
-//                 attack: e.data.stats[1].base_stat,
-//                 types: e.data.types.map((e) => e.type),
-
-//             })
-//         );
-//     }
-    
-//     return allPokemons;
-// };
-
-//Response (15.638s) - http://localhost:3001/pokemon
 const getApiInfo = async () =>{
     try {
         
@@ -189,5 +158,17 @@ router.post('/', async (req, res) => {
 
 })
 
+router.delete('/delete/:id', (req, res) => {
+    const id = req.params.id;
+    Pokemon.destroy({
+        where: {
+            id:id
+        }
+    }).then(()=> {
+        res.send("Pokemon emiminado")
+    }).catch(error => {
+        res.status(404).json({message:"No se encontro el Pokemon"})
+    })
+})
 
 module.exports = router;

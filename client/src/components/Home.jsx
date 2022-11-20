@@ -65,6 +65,7 @@ export default function Home() {
         <div className={styles.background}>
 
             <div className={styles.head}>
+                <Link to="/about" className={styles.about}>Sobre mi</Link>
                 <Link className={styles.btnCrear} to='/pokemon'>Crear Pokémon</Link>
                 <SearchBar className={styles.search} />
                 <div className={styles.txtHome}>
@@ -77,53 +78,57 @@ export default function Home() {
             </div>
             
             <div>
-                {/* Ordenar tanto ascendentemente como descendentemente los pokemons por orden alfabético */}
-                <select className={styles.select} onChange={e => handleSortName(e)}>
-                    <option value="vacio">Alfabéticamente</option>
-                    <option value="asc">Ascendente</option>
-                    <option value="desc">Descendente</option>
-                </select>
 
-                {/* Ordenar por ataque */}
-                <select className={styles.select} onChange={e => handleSortAttack(e)}>
-                    <option className={styles.option} value="vacio">Por ataque</option>
-                    <option className={styles.option} value="high">Más alto</option>
-                    <option className={styles.option} value="low">Más bajo</option>
-                </select>
+                <div className={styles.headB}>
+                    {/* Ordenar tanto ascendentemente como descendentemente los pokemons por orden alfabético */}
+                    <select className={styles.select} onChange={e => handleSortName(e)}>
+                        <option value="vacio">Alfabéticamente</option>
+                        <option value="asc">Ascendente</option>
+                        <option value="desc">Descendente</option>
+                    </select>
 
-                {/* Filtrar por tipo de pokemon */}
-                <select className={styles.select} onChange={e => handleFilterTypes(e)}>
-                    <option value="all">Todos los Tipos</option>
-                    <option value="poison">Poison</option>
-                    <option value="rock">Rock</option>
-                    <option value="ghost">Ghost</option>
-                    <option value="fire">Fire</option>
-                    <option value="psychic">Psychic</option>
-                    <option value="normal">Normal</option>
-                    <option value="grass">Grass</option>
-                    <option value="ice">Ice</option>
-                    <option value="fighting">Fighting</option>
-                    <option value="electric">Electric</option>
-                    <option value="ground">Ground</option>
-                    <option value="dark">Dark</option>
-                    <option value="flying">Flying</option>
-                    <option value="bug">Bug</option>
-                    <option value="steel">Steel</option>
-                    <option value="water">Water</option>
-                    <option value="dragon">Dragon</option>
-                </select>
-    
+                    {/* Ordenar por ataque */}
+                    <select className={styles.select} onChange={e => handleSortAttack(e)}>
+                        <option className={styles.option} value="vacio">Por ataque</option>
+                        <option className={styles.option} value="high">Más alto</option>
+                        <option className={styles.option} value="low">Más bajo</option>
+                    </select>
 
-                {/* Filtrar por pokemon existente o creado por nosotros */}
-                <select className={styles.select} onChange={e => handleFilterCreated(e)}>
-                    <option value="all">Todos los Pokemons</option>
-                    <option value="api">Existentes</option>
-                    <option value="created">Creados</option>
-                </select>
+                    {/* Filtrar por tipo de pokemon */}
+                    <select className={styles.select} onChange={e => handleFilterTypes(e)}>
+                        <option value="all">Todos los Tipos</option>
+                        <option value="poison">Poison</option>
+                        <option value="rock">Rock</option>
+                        <option value="ghost">Ghost</option>
+                        <option value="fire">Fire</option>
+                        <option value="psychic">Psychic</option>
+                        <option value="normal">Normal</option>
+                        <option value="grass">Grass</option>
+                        <option value="ice">Ice</option>
+                        <option value="fighting">Fighting</option>
+                        <option value="electric">Electric</option>
+                        <option value="ground">Ground</option>
+                        <option value="dark">Dark</option>
+                        <option value="flying">Flying</option>
+                        <option value="bug">Bug</option>
+                        <option value="steel">Steel</option>
+                        <option value="water">Water</option>
+                        <option value="dragon">Dragon</option>
+                    </select>
+        
 
-                <button className={styles.select} onClick = {e => {handleClick(e)}}>
-                    Recargar todos los Pokémon
-                </button>
+                    {/* Filtrar por pokemon existente o creado por nosotros */}
+                    <select className={styles.select} onChange={e => handleFilterCreated(e)}>
+                        <option value="all">Todos los Pokemons</option>
+                        <option value="api">Existentes</option>
+                        <option value="created">Creados</option>
+                    </select>
+
+                    <button className={styles.select} onClick = {e => {handleClick(e)}}>
+                        Recargar
+                    </button>
+
+                </div>
 
                 {/* Paginado */}
                 <Paginate

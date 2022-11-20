@@ -26,7 +26,14 @@
     align-items: center;
     justify-content: space-evenly;
     background: dimgray;
-    margin-bottom: 10px;
+}
+
+.headB {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-evenly;
+    background: yellow;
 }
 
 .txtHome {
@@ -47,8 +54,8 @@
 }
 
 .gif {
-    width: 1200px;
-    height: 500px;
+    width: 1000px;
+    height: 470px;
 }
 
 .btnCrear  {
@@ -108,4 +115,22 @@ option {
     float: left;
     text-decoration: none;
     opacity: none;  
+}
+
+.about  {
+    margin-top: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    padding: 10px;
+    color: yellow;
+    border: 1px solid yellow;
+    border-radius: 4px;
+    transition: all 400ms ease;
+    margin-bottom: 15px;
+}
+
+.about:hover {
+    background: yellow;
+    color: black;
 }

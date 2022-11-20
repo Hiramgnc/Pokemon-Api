@@ -5,6 +5,7 @@ import LandingPage from './components/LandingPage';
 import Home from './components/Home';
 import Detail from './components/Detail';
 import PokemonCreate from './components/PokemonCreate';
+import About from './components/About';
 
 import { getPokemons } from './actions';
 import { useDispatch } from 'react-redux';
@@ -25,6 +26,7 @@ function App() {
           <Route exact path='/home' component={Home} />
           <Route path='/pokemon' component={PokemonCreate} />
           <Route path='/home/:id' component={Detail} />
+          <Route path="/about" component={About}/>
         </Switch>
       </div>
     </BrowserRouter>

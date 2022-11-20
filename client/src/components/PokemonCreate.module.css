@@ -30,7 +30,7 @@
 }
 
 .label {
-    text-align: center;
+    text-align: end;
     padding: 5px 10px;
     font-size: 25px;
     color: chartreuse;

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { getDetail, resetDetail } from '../actions';
+import { getDetail, resetDetail, deletePokemon } from '../actions';
 import styles from './Detail.module.css';
 
 //Ruta de detalle de Pokemon: debe contener
@@ -14,6 +14,9 @@ export default function Detail(props) {
     console.log(props)
 
     const dispatch = useDispatch();
+    //Delete
+    const id = props.match.params.id
+    let history = useHistory()
 
     useEffect(() => {
         dispatch(getDetail(props.match.params.id));
@@ -23,6 +26,12 @@ export default function Detail(props) {
     }, [dispatch, props.match.params.id]);
 
     const myPokemon = useSelector((state) => state.detail)
+
+    //Delete
+    function handleDelete (e) {
+        dispatch(deletePokemon(e.target.value))
+        history.push('/home')
+    }    
 
 
     return (
@@ -60,6 +69,15 @@ export default function Detail(props) {
             }
 
             </div>
+
+            {/* Delete */}
+            { id.length > 7 ?
+                <div>
+                    <button className={styles.delete} 
+                    value={id} onClick={e => handleDelete(e)}>Eliminar Pokémon</button>
+                </div> :
+                null
+            }
 
             <Link to='/home'>
                 <button className={styles.button}>Volver</button>

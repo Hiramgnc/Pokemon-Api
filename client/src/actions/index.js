@@ -102,3 +102,14 @@ export function filterByType(payload) {
         payload
     }
 }
+
+//Delete
+export function deletePokemon(payload) {
+    axios
+        .delete("http://localhost:3001/pokemon/delete/" + payload)
+        .catch((err) => console.log(err.message));
+    return {
+        type: 'DELETE_POKEMON',
+        payload,
+    };
+}

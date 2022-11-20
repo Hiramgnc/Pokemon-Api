@@ -11,7 +11,9 @@ export default function Card ({ image, name, type, id }) {
             <div className={styles.card}>
                 <div className={styles.cardContainer}>
 
-                    <img className={styles.image} src={image} alt='Imagen no disponible' />
+                    <img className={styles.image} 
+                    src={image ? image :'https://i.postimg.cc/sxWdvP8P/1159692.jpg'} 
+                    alt='Imagen no disponible' />
 
                     <div className={styles.name}>
                         <h2>{name}</h2>

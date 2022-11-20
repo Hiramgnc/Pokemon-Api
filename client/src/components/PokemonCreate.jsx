@@ -118,8 +118,9 @@ export default function PokemonCreate() {
         // console.log(input)
     }
 
+    //https://i.postimg.cc/43gpFW3d/Tony-removebg-preview.png
     function handleSelect(e) {
-        //.include validar si lo tiene, desabilitar select disabled, recorrer array. .find
+        //Validar si lo tiene, recorrer array .find
         const typeFounded = input.types.find((type) => {
             return type.name === e.target.value
         })
@@ -194,7 +195,7 @@ export default function PokemonCreate() {
             <Link to='/home'><button className={styles.btnVol}>Volver</button></Link>
 
                 <h1 className={styles.title}>Crea tu Pokémon</h1>
-                <form className={styles.form} onSubmit={(e) => handleSubmit (e)}>
+                <form onSubmit={(e) => handleSubmit (e)}>
 
                     <div className={styles.label}>
                         <label>Nombre:</label>
@@ -247,6 +248,8 @@ export default function PokemonCreate() {
                             <p className={styles.error}>{errors.attack}</p>
                         )}   
                     </div>
+
+                    
 
                     <div className={styles.label}>
                         <label>Defensa:</label>

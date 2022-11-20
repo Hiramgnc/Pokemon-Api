@@ -138,6 +138,14 @@ function rootReducer (state = initialState, action) {
                 pokemons: [...typeFiltered]
             };
 
+        case "DELETE_POKEMON":
+            let filterPokemon= state.pokemons.filter(poke => poke.id === action.payload)
+            return {
+                ...state,
+                MyPokemon: filterPokemon
+            }
+
+
         default: 
         return state;
     }
