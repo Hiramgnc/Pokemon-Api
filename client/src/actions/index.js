@@ -1,8 +1,10 @@
 import axios from 'axios';
+const ROOT = "https://pokemon-api-production.up.railway.app";
 
 export function getPokemons() {
     return async function(dispatch) {
-        let json = await axios.get('http://localhost:3001/pokemon');
+        // let json = await axios.get('http://localhost:3001/pokemon');
+        let json = await axios.get(`${ROOT}/pokemon`);
         return dispatch ({
             type: 'GET_POKEMONS',
             payload: json.data
@@ -13,7 +15,8 @@ export function getPokemons() {
 //Formulario
 export function getTypes() {
     return async function(dispatch){
-        let info = await axios.get('http://localhost:3001/type', {
+        // let info = await axios.get('http://localhost:3001/type', {
+        let info = await axios.get(`${ROOT}/type` , {
         });
         return dispatch ({
             type: 'GET_TYPES',
@@ -24,7 +27,8 @@ export function getTypes() {
 
 export function postPokemon(payload) {
     return async function(dispatch){
-        const response = await axios.post('http://localhost:3001/pokemon', payload);
+        // const response = await axios.post('http://localhost:3001/pokemon', payload);
+        const response = await axios.post(`${ROOT}/pokemon`, payload);
         console.log(response)
         return response;
     }
@@ -34,7 +38,8 @@ export function postPokemon(payload) {
 export function getDetail(id) {
     return async function(dispatch){
         try {
-            let json = await axios.get(`http://localhost:3001/pokemon/${id}`);
+            // let json = await axios.get(`http://localhost:3001/pokemon/${id}`);
+            let json = await axios.get(`${ROOT}/pokemon/${id}`);
             return dispatch ({
                 type: 'GET_DETAILS',
                 payload: json.data
@@ -58,7 +63,8 @@ export function resetDetail() {
 export function getNamePokemons(name) {
     return async function(dispatch){
         try {
-            let json = await axios.get("http://localhost:3001/pokemon?name=" + name);
+            // let json = await axios.get("http://localhost:3001/pokemon?name=" + name);
+            let json = await axios.get(`${ROOT}/pokemon?name=` + name);
             return dispatch ({
                 type: 'GET_NAME_POKEMONS',
                 payload: json.data
@@ -106,7 +112,8 @@ export function filterByType(payload) {
 //Delete
 export function deletePokemon(payload) {
     axios
-        .delete("http://localhost:3001/pokemon/delete/" + payload)
+        // .delete("http://localhost:3001/pokemon/delete/" + payload)
+        .delete(`${ROOT}/pokemon/delete/` + payload)
         .catch((err) => console.log(err.message));
     return {
         type: 'DELETE_POKEMON',
