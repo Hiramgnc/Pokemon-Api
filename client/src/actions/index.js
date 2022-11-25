@@ -1,5 +1,4 @@
 import axios from 'axios';
-// const ROOT = "https://pokemon-api-production.up.railway.app";
 
 export function getPokemons() {
     return async function(dispatch) {
